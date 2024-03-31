@@ -1,7 +1,7 @@
-my_printf - generates output based on a specified format
+_printf - generates output based on a specified format
 
 SYNOPSIS
-    int my_printf(const char *format, ...);
+    int _printf(const char *format, ...);
     ("String");
     ("%[c]...", 'data');
     ("%[s]...", "data");
