@@ -12,11 +12,7 @@ int _print_char(va_list args)
 	_putchar(va_arg(args, int));
 	return (1);
 }
-/**
- * _print_string - Print a string
- * @args: Argument list
- * Return: Number of characters printed
- */
+
 int _print_string(va_list args)
 {
 	char *str = va_arg(args, char *);
@@ -30,11 +26,7 @@ int _print_string(va_list args)
 
 	return (cnt);
 }
-/**
- * _print_int - Print an integer
- * @args: Argument list
- * Return: Number of characters printed
- */
+
 int _print_int(va_list args)
 {
 	int n = va_arg(args, int);
