@@ -1,0 +1,21 @@
+my_printf - generates output based on a specified format
+
+SYNOPSIS
+    int my_printf(const char *format, ...);
+    ("String");
+    ("%[c]...", 'data');
+    ("%[s]...", "data");
+    ("%[d]...", data(numerals));
+    ("%[i]...", data(numerals));
+
+DESCRIPTION
+    Generates output based on a specified format.
+    Returns: the count of characters printed (excluding the null byte -
+    - used to terminate output to strings)
+    In the event of incorrect type usage, the function will return an error.
+
+    %c - represents char type
+    %s - represents char array / string
+    %d - represents decimal
+    %i - represents integer
+
