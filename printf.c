@@ -35,25 +35,30 @@ int _printf(const char *format, ...) {
                 write(1, "%", 1);
                 x++;
             } else if (*format == 'd' || *format == 'i') {
-                char buffer[1024];
                 long n = va_arg(args, long);
-                int i = 0;
-                if (n < 0) {
-                    write(1, "-", 1);
-                    x++;
-                    n = -n;
-                }
-                if (n == 0) {
-                    buffer[i++] = '0';
+                if (n == INT_MIN) {
+                    write(1, "-2147483648", 11);
+                    x += 11;
                 } else {
-                    while (n != 0) {
-                        buffer[i++] = '0' + (n % 10);
-                        n /= 10;
+                    char buffer[1024];
+                    int i = 0;
+                    if (n < 0) {
+                        write(1, "-", 1);
+                        x++;
+                        n = -n;
                     }
-                }
-                while (i > 0) {
-                    write(1, &buffer[--i], 1);
-                    x++;
+                    if (n == 0) {
+                        buffer[i++] = '0';
+                    } else {
+                        while (n != 0) {
+                            buffer[i++] = '0' + (n % 10);
+                            n /= 10;
+                        }
+                    }
+                    while (i > 0) {
+                        write(1, &buffer[--i], 1);
+                        x++;
+                    }
                 }
             } else {
                 write(1, "%", 1);
