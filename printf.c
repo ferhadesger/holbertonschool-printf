@@ -55,6 +55,10 @@ int _printf(const char *format, ...) {
                     write(1, &buffer[--i], 1);
                     x++;
                 }
+            } else {
+                write(1, "%", 1);
+                write(1, format, 1);
+                x += 2;
             }
         } else {
             write(1, format, 1);
