@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stdlib.h>
-
+#include <stdio.h>
 int _printf(const char *format, ...) {
     va_list args;
     int x = 0;
@@ -35,12 +35,12 @@ int _printf(const char *format, ...) {
             } else if (*format == 'd' || *format == 'i') {
                 char buffer[1024];
 		long n = va_arg(args, long);
-                if (n < 0) {
+                int i = 0;
+	       	if (n < 0) {
                     write(1, "-", 1);
                     x++;
                     n = -n;
                 }
-                int i = 0;
                 if (n == 0) {
                     buffer[i++] = '0';
                 } else {
