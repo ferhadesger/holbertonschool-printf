@@ -18,4 +18,28 @@ DESCRIPTION
     %s - represents char array / string
     %d - represents decimal
     %i - represents integer
+EXAMPLES
+    CODE:
+            my_printf("Hello.\n");
+    OUTPUT:
+            Displaying a straightforward sentence.
+            (newline character included!)
+            This code snippet yields the length of the output (31)
+    CODE:
+            my_printf("%s", "This sentence is extracted from va_args!\n");
+    OUTPUT:
+            This sentence is extracted from va_args!
+            (newline character included!)
+            This code snippet yields the length of the output (41)
+
+SEE ALSO
+    putchar.c
+    putstr.c
+
+BUGS
+    None
+
+AUTHOR
+    Tahir Alizada
+    Ferhad Asgrzada
 
