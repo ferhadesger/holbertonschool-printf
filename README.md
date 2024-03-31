@@ -1,4 +1,4 @@
-C - printf - By Tahir & Ferhad of ALX A collaborative project by ALX Software Engineering to implement the inbuilt printf function in c from scratch.
+C - printf - By Tahir & Ferhad of A collaborative project by Holberton Software Engineering to implement the inbuilt printf function in c from scratch.
 
 
 
