@@ -1,78 +1,129 @@
-#include <unistd.h>
 #include <stdarg.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <unistd.h>
+#include "main.h"
 #include <limits.h>
-
-int _printf(const char *format, ...) {
-    va_list args;
-    int x = 0;
-
-    va_start(args, format);
-
-    while (*format != '\0') {
-        if (*format == '%') {
-            format++;
-            if (*format == '\0')
-                break;
-            if (*format == 'c') {
-                int c = va_arg(args, int);
-                write(1, &c, 1);
-                x++;
-            } else if (*format == 's') {
-                char *s = va_arg(args, char *);
-                if (s == NULL) {
-                    write(1, "(null)", 6);
-                    x += 6;
-                } else {
-                    while (*s != '\0') {
-                        write(1, s, 1);
-                        s++;
-                        x++;
-                    }
-                }
-            } else if (*format == '%') {
-                write(1, "%", 1);
-                x++;
-            } else if (*format == 'd' || *format == 'i') {
-                long n = va_arg(args, long);
-                if (n == INT_MIN) {
-                    write(1, "-2147483648", 11);
-                    x += 11;
-                } else {
-                    char buffer[1024];
-                    int i = 0;
-                    if (n < 0) {
-                        write(1, "-", 1);
-                        x++;
-                        n = -n;
-                    }
-                    if (n == 0) {
-                        buffer[i++] = '0';
-                    } else {
-                        while (n != 0) {
-                            buffer[i++] = '0' + (n % 10);
-                            n /= 10;
-                        }
-                    }
-                    while (i > 0) {
-                        write(1, &buffer[--i], 1);
-                        x++;
-                    }
-                }
-            } else {
-                write(1, "%", 1);
-                write(1, format, 1);
-                x += 2;
-            }
-        } else {
-            write(1, format, 1);
-            x++;
-        }
-        format++;
-    }
-
-    va_end(args);
-    return x;
+/**
+ * _print_char - Print a character
+ * @args: Argument list
+ * Return: Number of characters printed
+ */
+int _print_char(va_list args)
+{
+	_putchar(va_arg(args, int));
+	return (1);
 }
+/**
+ * _print_string - Print a string
+ * @args: Argument list
+ * Return: Number of characters printed
+ */
+int _print_string(va_list args)
+{
+	char *str = va_arg(args, char *);
+	int cnt = 0;
 
+	if (str == NULL)
+		str = "(null)";
+
+	for (; *str != '\0'; str++, cnt++)
+		_putchar(*str);
+
+	return (cnt);
+}
+/**
+ * _print_int - Print an integer
+ * @args: Argument list
+ * Return: Number of characters printed
+ */
+int _print_int(va_list args)
+{
+	int n = va_arg(args, int);
+	int div = 1;
+	int cnt = 0;
+	int temp;
+
+	if (n == INT_MIN)
+	{
+		_putchar('-');
+		_putchar('2');
+		n = 147483648;
+		cnt += 2;
+	}
+	else if (n < 0)
+	{
+		_putchar('-');
+		n *= -1;
+		cnt++;
+	}
+
+	for (temp = n; temp > 9; temp /= 10)
+		div *= 10;
+
+	for (; div > 0; div /= 10, cnt++)
+		_putchar('0' + (n / div) % 10);
+
+	return (cnt);
+}
+/**
+ * handle_format - Handle different format specifiers
+ * @format_ptr: Pointer to the current format specifier
+ * @args: Argument list
+ * Return: Number of characters printed
+ */
+int handle_format(const char **format_ptr, va_list args)
+{
+	switch (**format_ptr)
+	{
+		case 'c':
+			return (_print_char(args));
+		case 's':
+			return (_print_string(args));
+		case 'd':
+		case 'i':
+			return (_print_int(args));
+		case '%':
+			_putchar('%');
+			return (1);
+		default:
+			_putchar('%');
+			_putchar(**format_ptr);
+			return (2);
+	}
+}
+/**
+ * _printf - Custom printf function
+ * @format: Format string
+ * Return: Number of characters printed (excluding null byte)
+ */
+int _printf(const char *format, ...)
+{
+	int cnt = 0;
+	va_list args;
+
+	if (format == NULL)
+		return (-1);
+
+	va_start(args, format);
+
+	for (; *format != '\0'; format++)
+	{
+		if (*format == '%')
+		{
+			format++;
+			if (*format == '\0')
+			{
+				return (-1);
+			}
+			cnt += handle_format(&format, args);
+		}
+		else
+		{
+			_putchar(*format);
+			cnt++;
+		}
+	}
+
+	va_end(args);
+
+	return (cnt);
+}
