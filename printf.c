@@ -36,9 +36,9 @@ int _printf(const char *format, ...) {
                 x++;
             } else if (*format == 'd' || *format == 'i') {
                 char buffer[1024];
-		long n = va_arg(args, long);
+                long n = va_arg(args, long);
                 int i = 0;
-	       	if (n < 0) {
+                if (n < 0) {
                     write(1, "-", 1);
                     x++;
                     n = -n;
@@ -66,3 +66,4 @@ int _printf(const char *format, ...) {
     va_end(args);
     return x;
 }
+
