@@ -33,13 +33,13 @@ int _printf(const char *format, ...) {
                 write(1, "%", 1);
                 x++;
             } else if (*format == 'd' || *format == 'i') {
-                long n = va_arg(args, long);
+                char buffer[1024];
+		long n = va_arg(args, long);
                 if (n < 0) {
                     write(1, "-", 1);
                     x++;
                     n = -n;
                 }
-                char buffer[1024];
                 int i = 0;
                 if (n == 0) {
                     buffer[i++] = '0';
