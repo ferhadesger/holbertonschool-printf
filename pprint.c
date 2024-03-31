@@ -1,7 +1,8 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stdlib.h>
-
+#include <stdio.h>
+#include <limits.h>
 
 int _printf(const char *format, ...) {
     va_list args;
